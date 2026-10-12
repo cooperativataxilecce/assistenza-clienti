@@ -1,569 +1,1221 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Preventivo Taxi - Cooperativa Taxi Lecce</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+<title>Assistenza Clienti | Cooperativa Taxi Lecce</title>
 
 <style>
-
-*{
-box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-
-body{
-
-margin:0;
-background:#f4f4f4;
-font-family:'Montserrat',Arial,sans-serif;
-color:#222;
-
+body {
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
 }
 
-
-.box{
-
-width:90%;
-max-width:430px;
-margin:40px auto;
-background:white;
-padding:30px;
-border-radius:18px;
-box-shadow:0 5px 20px rgba(0,0,0,0.12);
-
+.container {
+    background: white;
+    max-width: 650px;
+    width: 100%;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
 }
 
-
-
-.logo{
-
-display:block;
-width:130px;
-margin:0 auto 20px;
-
+.logo {
+    display: block;
+    margin: 0 auto 20px;
+    width: 180px;
+    max-width: 100%;
 }
 
-
-
-h1{
-
-text-align:center;
-font-size:27px;
-margin:0;
-
+.lang-switch {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-bottom: 18px;
 }
 
-
-
-.sottotitolo{
-
-text-align:center;
-color:#f58220;
-font-size:19px;
-font-weight:600;
-margin:10px 0 20px;
-
+.lang-switch button {
+    width: auto;
+    margin: 0;
+    padding: 8px 12px;
+    background: white;
+    color: #444;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
 }
 
-
-
-.descrizione{
-
-text-align:center;
-font-size:13px;
-color:#666;
-line-height:1.6;
-
+.lang-switch button.active {
+    background: #f39c12;
+    color: white;
+    border-color: #f39c12;
 }
 
-
-
-label{
-
-display:block;
-margin-top:18px;
-font-weight:600;
-font-size:14px;
-
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #111;
+    line-height: 1.4;
 }
 
-
-
-input{
-
-width:100%;
-padding:13px;
-margin-top:7px;
-border-radius:8px;
-border:1px solid #ddd;
-font-family:'Montserrat';
-
+.intro {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+    line-height: 1.6;
 }
 
-
-
-.checkbox{
-
-display:flex;
-align-items:center;
-gap:8px;
-
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 7px;
+    font-size: 14px;
+    color: #222;
 }
 
-
-.checkbox input{
-
-width:auto;
-
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    background: white;
+    color: #222;
+    transition: border-color .2s, box-shadow .2s;
 }
 
-
-
-button{
-
-width:100%;
-margin-top:25px;
-padding:15px;
-
-border:0;
-border-radius:8px;
-
-background:#f58220;
-
-color:white;
-
-font-size:15px;
-font-weight:600;
-
-cursor:pointer;
-
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #f39c12;
+    box-shadow: 0 0 0 3px rgba(243,156,18,.13);
 }
 
-
-
-#prenota{
-
-display:none;
-
-background:#25D366;
-
+textarea {
+    resize: vertical;
+    min-height: 95px;
 }
 
-
-
-#risultato{
-
-margin-top:25px;
-text-align:center;
-font-size:18px;
-font-weight:600;
-line-height:1.6;
-
+select {
+    cursor: pointer;
 }
 
-
-
-.supplementi{
-
-font-size:13px;
-color:#666;
-font-weight:400;
-margin-top:15px;
-
+.section {
+    margin-top: 25px;
+    padding-top: 23px;
+    border-top: 1px solid #eee;
 }
 
-
-
-.avviso{
-
-width:90%;
-max-width:430px;
-margin:20px auto;
-
-text-align:center;
-font-size:12px;
-color:#666;
-
-line-height:1.6;
-
+.section-title {
+    font-size: 17px;
+    font-weight: bold;
+    color: #111;
+    margin-bottom: 7px;
 }
 
+.section-description {
+    color: #777;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
 
+.hidden {
+    display: none !important;
+}
+
+.required-note {
+    color: #777;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 14px;
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 10px;
+}
+
+.checkbox-item input {
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: #f39c12;
+    cursor: pointer;
+}
+
+.checkbox-item label {
+    margin: 0;
+    font-size: 13px;
+    font-weight: normal;
+    color: #444;
+    line-height: 1.6;
+    cursor: pointer;
+}
+
+.confirmation-title {
+    font-weight: bold !important;
+    color: #222 !important;
+}
+
+.privacy {
+    margin-top: 25px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.privacy input {
+    width: 17px;
+    height: 17px;
+    margin-top: 3px;
+    flex-shrink: 0;
+    accent-color: #f39c12;
+    cursor: pointer;
+}
+
+.privacy label {
+    margin: 0;
+    font-weight: normal;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.privacy a {
+    color: #d88708;
+    text-decoration: none;
+}
+
+.privacy a:hover {
+    text-decoration: underline;
+}
+
+.submit-btn {
+    width: 100%;
+    margin-top: 28px;
+    padding: 16px;
+    background: #f39c12;
+    border: none;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+}
+
+.submit-btn:hover {
+    background: #d87f00;
+}
+
+.submit-btn:active {
+    transform: scale(.99);
+}
+
+.footer-note {
+    margin-top: 18px;
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    .container {
+        padding: 22px 18px;
+        border-radius: 15px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+}
 </style>
-
 
 </head>
 
-
-
 <body>
 
+<div class="container">
 
-<div class="box">
+    <div class="lang-switch" aria-label="Seleziona lingua">
+        <button type="button"
+                data-lang="it"
+                class="active"
+                aria-pressed="true">IT</button>
+
+        <button type="button"
+                data-lang="en"
+                aria-pressed="false">EN</button>
+    </div>
+
+    <img src="logo.png"
+         class="logo"
+         alt="Cooperativa Taxi Lecce">
+
+    <h2 data-it="Assistenza Clienti"
+        data-en="Customer Support">
+        Assistenza Clienti
+    </h2>
+
+    <p class="intro"
+       data-it="Siamo qui per aiutarti. Seleziona il motivo del contatto e compila i campi richiesti per inviarci la tua richiesta."
+       data-en="We are here to help. Select the reason for contacting us and complete the required fields to send your request.">
+        Siamo qui per aiutarti. Seleziona il motivo del contatto e compila i campi richiesti per inviarci la tua richiesta.
+    </p>
+
+    <form id="supportForm">
+
+        <!-- TIPO DI RICHIESTA -->
+
+        <label for="tipo"
+               data-it="Tipo di richiesta / Request type"
+               data-en="Request type">
+            Tipo di richiesta / Request type
+        </label>
+
+        <select id="tipo" required>
+            <option value=""
+                    data-it="Seleziona il motivo del contatto"
+                    data-en="Select the reason for contacting us">
+                Seleziona il motivo del contatto
+            </option>
+
+            <option value="general"
+                    data-it="Informazioni generali / General info"
+                    data-en="General info">
+                Informazioni generali / General info
+            </option>
+
+            <option value="problem"
+                    data-it="Problemi con la prenotazione / Booking issue"
+                    data-en="Booking issue">
+                Problemi con la prenotazione / Booking issue
+            </option>
+
+            <option value="change"
+                    data-it="Modifica prenotazione / Change booking"
+                    data-en="Change booking">
+                Modifica prenotazione / Change booking
+            </option>
+
+            <option value="cancel"
+                    data-it="Cancellazione / Cancellation"
+                    data-en="Cancellation">
+                Cancellazione / Cancellation
+            </option>
+
+            <option value="question"
+                    data-it="Vorrei fare una domanda / I would like to ask a question"
+                    data-en="I would like to ask a question">
+                Vorrei fare una domanda / I would like to ask a question
+            </option>
+
+            <option value="other"
+                    data-it="Altro / Other"
+                    data-en="Other">
+                Altro / Other
+            </option>
+        </select>
 
 
-<img class="logo" src="https://raw.githubusercontent.com/guidofrancesco123-dotcom/Calcolatore-Cooperativa-Taxi-Lecce/main/logo.png">
+        <!-- DATI DI CONTATTO: COMUNI A TUTTE LE RICHIESTE -->
+
+        <div id="commonFields" class="section hidden">
+
+            <div class="section-title"
+                 data-it="I tuoi dati"
+                 data-en="Your details">
+                I tuoi dati
+            </div>
+
+            <p class="section-description"
+               data-it="Inserisci i dati necessari per permetterci di risponderti."
+               data-en="Enter the details we need to get back to you.">
+                Inserisci i dati necessari per permetterci di risponderti.
+            </p>
+
+            <label for="nome"
+                   data-it="Nome e cognome"
+                   data-en="Full name">
+                Nome e cognome
+            </label>
+
+            <input type="text"
+                   id="nome"
+                   autocomplete="name"
+                   data-placeholder-it="Inserisci nome e cognome"
+                   data-placeholder-en="Enter your full name"
+                   placeholder="Inserisci nome e cognome"
+                   required>
+
+            <label for="telefono"
+                   data-it="Numero di telefono"
+                   data-en="Phone number">
+                Numero di telefono
+            </label>
+
+            <input type="tel"
+                   id="telefono"
+                   autocomplete="tel"
+                   data-placeholder-it="Inserisci il tuo numero"
+                   data-placeholder-en="Enter your phone number"
+                   placeholder="Inserisci il tuo numero"
+                   required>
+
+        </div>
 
 
+        <!-- INFORMAZIONI GENERALI -->
 
-<h1>
-Cooperativa Taxi Lecce
-</h1>
+        <div id="generalSection" class="section hidden">
+
+            <div class="section-title"
+                 data-it="Informazioni generali"
+                 data-en="General information">
+                Informazioni generali
+            </div>
+
+            <p class="section-description"
+               data-it="Dicci quale informazione ti serve."
+               data-en="Tell us what information you need.">
+                Dicci quale informazione ti serve.
+            </p>
+
+            <label for="generalTopic"
+                   data-it="Argomento"
+                   data-en="Topic">
+                Argomento
+            </label>
+
+            <select id="generalTopic" required>
+                <option value=""
+                        data-it="Seleziona un argomento"
+                        data-en="Select a topic">
+                    Seleziona un argomento
+                </option>
+
+                <option value="Tariffe / Fares"
+                        data-it="Tariffe"
+                        data-en="Fares">Tariffe</option>
+
+                <option value="Servizi / Services"
+                        data-it="Servizi"
+                        data-en="Services">Servizi</option>
+
+                <option value="Trasferimenti aeroportuali / Airport transfers"
+                        data-it="Trasferimenti aeroportuali"
+                        data-en="Airport transfers">Trasferimenti aeroportuali</option>
+
+                <option value="Modalita di prenotazione / Booking process"
+                        data-it="Modalità di prenotazione"
+                        data-en="Booking process">Modalità di prenotazione</option>
+
+                <option value="Altro / Other"
+                        data-it="Altro"
+                        data-en="Other">Altro</option>
+            </select>
+
+            <label for="generalDetails"
+                   data-it="Messaggio"
+                   data-en="Message">
+                Messaggio
+            </label>
+
+            <textarea id="generalDetails"
+                      data-placeholder-it="Come possiamo aiutarti?"
+                      data-placeholder-en="How can we help you?"
+                      placeholder="Come possiamo aiutarti?"
+                      required></textarea>
+
+        </div>
 
 
-<div class="sottotitolo">
-Calcola il tuo preventivo
+        <!-- PROBLEMI CON LA PRENOTAZIONE -->
+
+        <div id="problemSection" class="section hidden">
+
+            <div class="section-title"
+                 data-it="Problemi con la prenotazione"
+                 data-en="Booking issue">
+                Problemi con la prenotazione
+            </div>
+
+            <p class="section-description"
+               data-it="Fornisci i dettagli della prenotazione e indica il problema riscontrato."
+               data-en="Provide your booking details and tell us what went wrong.">
+                Fornisci i dettagli della prenotazione e indica il problema riscontrato.
+            </p>
+
+            <label for="problemReference"
+                   data-it="Riferimento della prenotazione (se disponibile)"
+                   data-en="Booking reference (if available)">
+                Riferimento della prenotazione (se disponibile)
+            </label>
+
+            <input type="text"
+                   id="problemReference"
+                   data-placeholder-it="Es. data e ora del viaggio"
+                   data-placeholder-en="E.g. journey date and time"
+                   placeholder="Es. data e ora del viaggio">
+
+            <label for="problemDate"
+                   data-it="Data del viaggio (se applicabile)"
+                   data-en="Journey date (if applicable)">
+                Data del viaggio (se applicabile)
+            </label>
+
+            <input type="date" id="problemDate">
+
+            <label for="problemTopic"
+                   data-it="Tipo di problema"
+                   data-en="Type of issue">
+                Tipo di problema
+            </label>
+
+            <select id="problemTopic" required>
+                <option value=""
+                        data-it="Seleziona il problema"
+                        data-en="Select the issue">
+                    Seleziona il problema
+                </option>
+
+                <option value="Conferma prenotazione / Booking confirmation"
+                        data-it="Conferma della prenotazione"
+                        data-en="Booking confirmation">
+                    Conferma della prenotazione
+                </option>
+
+                <option value="Orario o ritardo / Time or delay"
+                        data-it="Orario o ritardo"
+                        data-en="Time or delay">
+                    Orario o ritardo
+                </option>
+
+                <option value="Pagamento / Payment"
+                        data-it="Pagamento"
+                        data-en="Payment">
+                    Pagamento
+                </option>
+
+                <option value="Altro problema / Other issue"
+                        data-it="Altro problema"
+                        data-en="Other issue">
+                    Altro problema
+                </option>
+            </select>
+
+            <label for="problemDetails"
+                   data-it="Descrizione del problema"
+                   data-en="Description of the issue">
+                Descrizione del problema
+            </label>
+
+            <textarea id="problemDetails"
+                      data-placeholder-it="Descrivi brevemente cosa è successo."
+                      data-placeholder-en="Briefly describe what happened."
+                      placeholder="Descrivi brevemente cosa è successo."
+                      required></textarea>
+
+        </div>
+
+
+        <!-- MODIFICA PRENOTAZIONE -->
+
+        <div id="changeSection" class="section hidden">
+
+            <div class="section-title"
+                 data-it="Modifica prenotazione"
+                 data-en="Change booking">
+                Modifica prenotazione
+            </div>
+
+            <p class="section-description"
+               data-it="Indica la prenotazione da modificare e seleziona solo i dati che desideri cambiare. La modifica sarà effettiva soltanto dopo la conferma della Cooperativa Taxi Lecce."
+               data-en="Identify the booking and select only the details you want to change. Changes will take effect only after confirmation by Cooperativa Taxi Lecce.">
+                Indica la prenotazione da modificare e seleziona solo i dati che desideri cambiare. La modifica sarà effettiva soltanto dopo la conferma della Cooperativa Taxi Lecce.
+            </p>
+
+            <label for="changeReference"
+                   data-it="Riferimento della prenotazione"
+                   data-en="Booking reference">
+                Riferimento della prenotazione
+            </label>
+
+            <input type="text"
+                   id="changeReference"
+                   data-placeholder-it="Inserisci il riferimento, se disponibile"
+                   data-placeholder-en="Enter the reference, if available"
+                   placeholder="Inserisci il riferimento, se disponibile">
+
+            <label for="changeDate"
+                   data-it="Data attuale del viaggio"
+                   data-en="Current journey date">
+                Data attuale del viaggio
+            </label>
+
+            <input type="date" id="changeDate" required>
+
+            <label for="changeTime"
+                   data-it="Orario attuale"
+                   data-en="Current time">
+                Orario attuale
+            </label>
+
+            <input type="time" id="changeTime" required>
+
+            <label for="changeType"
+                   data-it="Che cosa vuoi modificare?"
+                   data-en="What would you like to change?">
+                Che cosa vuoi modificare?
+            </label>
+
+            <select id="changeType" required>
+                <option value=""
+                        data-it="Seleziona cosa modificare"
+                        data-en="Select what to change">
+                    Seleziona cosa modificare
+                </option>
+
+                <option value="Data / Date"
+                        data-it="Data"
+                        data-en="Date">Data</option>
+
+                <option value="Orario / Time"
+                        data-it="Orario"
+                        data-en="Time">Orario</option>
+
+                <option value="Partenza / Pickup"
+                        data-it="Indirizzo di partenza"
+                        data-en="Pickup address">Indirizzo di partenza</option>
+
+                <option value="Destinazione / Destination"
+                        data-it="Destinazione"
+                        data-en="Destination">Destinazione</option>
+
+                <option value="Passeggeri / Passengers"
+                        data-it="Numero di passeggeri"
+                        data-en="Number of passengers">Numero di passeggeri</option>
+
+                <option value="Altro / Other"
+                        data-it="Altro"
+                        data-en="Other">Altro</option>
+            </select>
+
+            <label for="changeDetails"
+                   data-it="Nuovi dati richiesti"
+                   data-en="Requested changes">
+                Nuovi dati richiesti
+            </label>
+
+            <textarea id="changeDetails"
+                      data-placeholder-it="Inserisci i nuovi dati. Es. nuovo orario: 10:30"
+                      data-placeholder-en="Enter the new details. E.g. new time: 10:30"
+                      placeholder="Inserisci i nuovi dati. Es. nuovo orario: 10:30"
+                      required></textarea>
+
+            <div class="checkbox-item">
+                <input type="checkbox"
+                       id="changeConfirm"
+                       required>
+
+                <label for="changeConfirm"
+                       class="confirmation-title"
+                       data-it="Confermo di voler richiedere questa modifica e comprendo che sarà valida solo dopo la conferma della Cooperativa Taxi Lecce."
+                       data-en="I confirm that I want to request this change and understand that it will only be effective after confirmation by Cooperativa Taxi Lecce.">
+                    Confermo di voler richiedere questa modifica e comprendo che sarà valida solo dopo la conferma della Cooperativa Taxi Lecce.
+                </label>
+            </div>
+
+        </div>
+
+
+        <!-- CANCELLAZIONE PRENOTAZIONE -->
+
+        <div id="cancelSection" class="section hidden">
+
+            <div class="section-title"
+                 data-it="Cancellazione prenotazione"
+                 data-en="Cancel booking">
+                Cancellazione prenotazione
+            </div>
+
+            <p class="section-description"
+               data-it="Inserisci i dati del viaggio che desideri cancellare. Prima di inviare la richiesta, ti chiederemo di confermare la tua scelta."
+               data-en="Enter the details of the journey you wish to cancel. Before sending your request, we will ask you to confirm your choice.">
+                Inserisci i dati del viaggio che desideri cancellare. Prima di inviare la richiesta, ti chiederemo di confermare la tua scelta.
+            </p>
+
+            <label for="cancelReference"
+                   data-it="Riferimento della prenotazione (se disponibile)"
+                   data-en="Booking reference (if available)">
+                Riferimento della prenotazione (se disponibile)
+            </label>
+
+            <input type="text"
+                   id="cancelReference"
+                   data-placeholder-it="Inserisci il riferimento, se disponibile"
+                   data-placeholder-en="Enter the reference, if available"
+                   placeholder="Inserisci il riferimento, se disponibile">
+
+            <label for="cancelDate"
+                   data-it="Data del viaggio"
+                   data-en="Journey date">
+                Data del viaggio
+            </label>
+
+            <input type="date" id="cancelDate" required>
+
+            <label for="cancelTime"
+                   data-it="Orario del viaggio"
+                   data-en="Journey time">
+                Orario del viaggio
+            </label>
+
+            <input type="time" id="cancelTime" required>
+
+            <label for="cancelReason"
+                   data-it="Motivo della cancellazione (facoltativo)"
+                   data-en="Reason for cancellation (optional)">
+                Motivo della cancellazione (facoltativo)
+            </label>
+
+            <select id="cancelReason">
+                <option value=""
+                        data-it="Preferisco non specificarlo"
+                        data-en="Prefer not to say">
+                    Preferisco non specificarlo
+                </option>
+
+                <option value="Cambio di programma / Change of plans"
+                        data-it="Cambio di programma"
+                        data-en="Change of plans">
+                    Cambio di programma
+                </option>
+
+                <option value="Viaggio non più necessario / Journey no longer needed"
+                        data-it="Viaggio non più necessario"
+                        data-en="Journey no longer needed">
+                    Viaggio non più necessario
+                </option>
+
+                <option value="Errore nella prenotazione / Booking error"
+                        data-it="Errore nella prenotazione"
+                        data-en="Booking error">
+                    Errore nella prenotazione
+                </option>
+
+                <option value="Altro / Other"
+                        data-it="Altro"
+                        data-en="Other">
+                    Altro
+                </option>
+            </select>
+
+            <div class="checkbox-item">
+                <input type="checkbox"
+                       id="cancelConfirm"
+                       required>
+
+                <label for="cancelConfirm"
+                       class="confirmation-title"
+                       data-it="Confermo di voler richiedere la cancellazione di questo viaggio. Comprendo che la richiesta deve essere presa in carico dalla Cooperativa Taxi Lecce."
+                       data-en="I confirm that I want to request the cancellation of this journey. I understand that the request must be processed by Cooperativa Taxi Lecce.">
+                    Confermo di voler richiedere la cancellazione di questo viaggio. Comprendo che la richiesta deve essere presa in carico dalla Cooperativa Taxi Lecce.
+                </label>
+            </div>
+
+        </div>
+
+
+        <!-- DOMANDA -->
+
+        <div id="questionSection" class="section hidden">
+
+            <div class="section-title"
+                 data-it="La tua domanda"
+                 data-en="Your question">
+                La tua domanda
+            </div>
+
+            <p class="section-description"
+               data-it="Scrivi la tua domanda e ti risponderemo appena possibile."
+               data-en="Write your question and we will get back to you as soon as possible.">
+                Scrivi la tua domanda e ti risponderemo appena possibile.
+            </p>
+
+            <label for="questionDetails"
+                   data-it="Domanda"
+                   data-en="Question">
+                Domanda
+            </label>
+
+            <textarea id="questionDetails"
+                      data-placeholder-it="Come possiamo aiutarti?"
+                      data-placeholder-en="How can we help you?"
+                      placeholder="Come possiamo aiutarti?"
+                      required></textarea>
+
+        </div>
+
+
+        <!-- ALTRO -->
+
+        <div id="otherSection" class="section hidden">
+
+            <div class="section-title"
+                 data-it="Altra richiesta"
+                 data-en="Other request">
+                Altra richiesta
+            </div>
+
+            <p class="section-description"
+               data-it="Descrivi brevemente di cosa hai bisogno."
+               data-en="Briefly describe what you need.">
+                Descrivi brevemente di cosa hai bisogno.
+            </p>
+
+            <label for="otherDetails"
+                   data-it="Descrizione della richiesta"
+                   data-en="Request details">
+                Descrizione della richiesta
+            </label>
+
+            <textarea id="otherDetails"
+                      data-placeholder-it="Scrivi qui la tua richiesta"
+                      data-placeholder-en="Write your request here"
+                      placeholder="Scrivi qui la tua richiesta"
+                      required></textarea>
+
+        </div>
+
+
+        <!-- PRIVACY -->
+
+        <div class="privacy hidden" id="privacyContainer">
+
+            <input type="checkbox"
+                   id="privacy"
+                   required>
+
+            <label for="privacy" id="privacyLabel">
+                Dichiaro di aver letto e accettato
+                <a href="https://www.cooperativataxilecce.it/pagina/informativa-sulla-privacy"
+                   target="_blank"
+                   rel="noopener noreferrer">l'informativa sulla privacy</a>.
+            </label>
+
+        </div>
+
+
+        <button type="submit"
+                class="submit-btn hidden"
+                id="submitBtn"
+                data-it="Invia richiesta su WhatsApp"
+                data-en="Send request on WhatsApp">
+            Invia richiesta su WhatsApp
+        </button>
+
+        <p class="footer-note hidden" id="footerNote"
+           data-it="L'invio della richiesta non costituisce una conferma di modifica o cancellazione della prenotazione."
+           data-en="Sending your request does not constitute confirmation of a booking change or cancellation.">
+            L'invio della richiesta non costituisce una conferma di modifica o cancellazione della prenotazione.
+        </p>
+
+    </form>
+
 </div>
-
-
-
-<div class="descrizione">
-
-Inserisci gli indirizzi completi di partenza e destinazione (es: Piazza Sant'Oronzo, Lecce, oppure, Aeroporto di Brindisi, Brindisi).
-
-</div>
-
-
-
-
-<label>
-Partenza
-</label>
-
-<input id="partenza" placeholder="Indirizzo completo di partenza">
-
-
-
-<label>
-Destinazione
-</label>
-
-<input id="destinazione" placeholder="Indirizzo completo di destinazione">
-
-
-
-<label>
-Ora del servizio
-</label>
-
-<input id="ora" type="time">
-
-
-
-<label>
-Numero bagagli
-</label>
-
-<input id="bagagli" type="number" min="0" value="0">
-
-
-
-<label class="checkbox">
-
-<input id="festivo" type="checkbox">
-
-Servizio festivo (+3€)
-
-</label>
-
-
-
-
-<button onclick="calcola()">
-
-Calcola preventivo
-
-</button>
-
-
-
-<div id="risultato"></div>
-
-
-
-<button id="prenota" onclick="vaiPrenotazione()">
-
-Prenota servizio
-
-</button>
-
-
-
-</div>
-
-
-
-<div class="avviso">
-
-Il preventivo è puramente indicativo e può variare in base al percorso effettivo, al traffico e alle condizioni del servizio. Il calcolatore può commettere errori, ti consigliamo di verificare il prezzo contattandoci.
-
-</div>
-
-
-
 
 
 <script>
+const parametri = new URLSearchParams(window.location.search);
 
+let linguaCorrente = "it";
 
+const form = document.getElementById("supportForm");
+const tipo = document.getElementById("tipo");
 
-async function geocode(indirizzo){
+const commonFields = document.getElementById("commonFields");
+const privacyContainer = document.getElementById("privacyContainer");
+const submitBtn = document.getElementById("submitBtn");
+const footerNote = document.getElementById("footerNote");
 
+const sezioni = {
+    general: document.getElementById("generalSection"),
+    problem: document.getElementById("problemSection"),
+    change: document.getElementById("changeSection"),
+    cancel: document.getElementById("cancelSection"),
+    question: document.getElementById("questionSection"),
+    other: document.getElementById("otherSection")
+};
 
-let risposta = await fetch(
+const campi = {
+    general: [
+        "generalTopic",
+        "generalDetails"
+    ],
 
-"https://nominatim.openstreetmap.org/search?format=json&q="
-+
-encodeURIComponent(indirizzo)
+    problem: [
+        "problemTopic",
+        "problemDetails"
+    ],
 
-);
+    change: [
+        "changeDate",
+        "changeTime",
+        "changeType",
+        "changeDetails",
+        "changeConfirm"
+    ],
 
+    cancel: [
+        "cancelDate",
+        "cancelTime",
+        "cancelConfirm"
+    ],
 
+    question: [
+        "questionDetails"
+    ],
 
-let dati = await risposta.json();
-
-
-
-if(dati.length===0){
-
-throw "Indirizzo non trovato";
-
-}
-
-
-
-return {
-
-lat:dati[0].lat,
-
-lon:dati[0].lon
-
+    other: [
+        "otherDetails"
+    ]
 };
 
 
+function getLanguage() {
+    const lang = parametri.get("lang");
+
+    if (lang === "it" || lang === "en") {
+        return lang;
+    }
+
+    return localStorage.getItem("ctl_lang") === "en"
+        ? "en"
+        : "it";
 }
 
 
+function setLanguage(lang) {
+    if (lang !== "it" && lang !== "en") return;
 
+    linguaCorrente = lang;
 
-async function calcola(){
+    localStorage.setItem("ctl_lang", lang);
 
+    document.documentElement.lang = lang;
 
+    document.querySelectorAll("[data-it][data-en]").forEach(element => {
+        element.textContent = element.getAttribute("data-" + lang);
+    });
 
-let risultato=document.getElementById("risultato");
+    document.querySelectorAll("[data-placeholder-it][data-placeholder-en]").forEach(element => {
+        element.placeholder = element.getAttribute("data-placeholder-" + lang);
+    });
 
+    document.querySelectorAll(".lang-switch button").forEach(button => {
+        const attivo = button.dataset.lang === lang;
 
-risultato.innerHTML="Calcolo in corso...";
+        button.classList.toggle("active", attivo);
 
+        button.setAttribute("aria-pressed", String(attivo));
+    });
 
+    const privacyLabel = document.getElementById("privacyLabel");
 
-try{
+    if (lang === "en") {
+        privacyLabel.innerHTML =
+            'I confirm that I have read and accepted the ' +
+            '<a href="https://www.cooperativataxilecce.it/pagina/informativa-sulla-privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.';
 
+        document.title = "Customer Support | Cooperativa Taxi Lecce";
 
+    } else {
+        privacyLabel.innerHTML =
+            'Dichiaro di aver letto e accettato ' +
+            '<a href="https://www.cooperativataxilecce.it/pagina/informativa-sulla-privacy" target="_blank" rel="noopener noreferrer">l\'informativa sulla privacy</a>.';
 
-let partenza =
-await geocode(
-document.getElementById("partenza").value
-);
-
-
-
-let destinazione =
-await geocode(
-document.getElementById("destinazione").value
-);
-
-
-
-let url =
-
-"https://router.project-osrm.org/route/v1/driving/"
-+
-partenza.lon+","+partenza.lat+
-";"+
-destinazione.lon+","+destinazione.lat+
-"?overview=false";
-
-
-
-let risposta=await fetch(url);
-
-
-let percorso=await risposta.json();
-
-
-
-let km=percorso.routes[0].distance/1000;
-
-
-
-let prezzo=5+(km*1.65);
-
-
-
-let dettagli=[];
-
-
-
-let ora=document.getElementById("ora").value;
-
-
-
-if(ora){
-
-
-let oraNumero=Number(ora.split(":")[0]);
-
-
-
-if(oraNumero>=21 && oraNumero<24){
-
-prezzo+=3;
-
-dettagli.push("Servizio notturno 21:00-00:00: +3€");
-
+        document.title = "Assistenza Clienti | Cooperativa Taxi Lecce";
+    }
 }
 
 
-if(oraNumero>=0 && oraNumero<6){
+function mostraSezione(sezioneAttiva) {
 
-prezzo+=5;
+    Object.entries(sezioni).forEach(([chiave, elemento]) => {
 
-dettagli.push("Servizio notturno 00:00-06:00: +5€");
+        const attiva = chiave === sezioneAttiva;
 
-}
+        elemento.classList.toggle("hidden", !attiva);
 
-}
+        elemento.querySelectorAll("input, select, textarea").forEach(campo => {
+            campo.disabled = !attiva;
+        });
 
+    });
 
+    const richiestaSelezionata = tipo.value !== "";
 
+    commonFields.classList.toggle("hidden", !richiestaSelezionata);
+    privacyContainer.classList.toggle("hidden", !richiestaSelezionata);
+    submitBtn.classList.toggle("hidden", !richiestaSelezionata);
+    footerNote.classList.toggle("hidden", !richiestaSelezionata);
 
-let bagagli=Number(
-document.getElementById("bagagli").value
-);
+    commonFields.querySelectorAll("input").forEach(campo => {
+        campo.disabled = !richiestaSelezionata;
+    });
 
+    document.getElementById("privacy").disabled = !richiestaSelezionata;
 
-
-if(bagagli>0){
-
-prezzo+=bagagli;
-
-dettagli.push(
-"Bagagli ("+bagagli+"): +"+bagagli+"€"
-);
-
-}
-
-
-
-
-if(document.getElementById("festivo").checked){
-
-prezzo+=3;
-
-dettagli.push("Servizio festivo: +3€");
-
+    // Svuota le conferme quando si cambia tipologia di richiesta.
+    document.getElementById("changeConfirm").checked = false;
+    document.getElementById("cancelConfirm").checked = false;
 }
 
 
+tipo.addEventListener("change", function() {
+
+    mostraSezione(tipo.value);
+
+});
 
 
-if(prezzo<10){
+document.querySelectorAll(".lang-switch button").forEach(button => {
 
-prezzo=10;
+    button.addEventListener("click", () => {
+        setLanguage(button.dataset.lang);
+    });
 
-}
-
-
-
-
-
-risultato.innerHTML=
-
-"Distanza: "
-+
-km.toFixed(1)
-+
-" km"
-
-+
-"<br><br>"
-
-+
-"Preventivo stimato: "
-+
-prezzo.toFixed(2)
-+
-" €"
-
-+
-
-"<div class='supplementi'>"
-
-+
-
-(dettagli.length>0
-
-?
-
-"<br><b>Supplementi applicati:</b><br>"+dettagli.join("<br>")
-
-:
-
-"<br>Nessun supplemento applicato"
-
-)
-
-+
-
-"</div>";
+});
 
 
+form.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const lang = linguaCorrente;
+    const richiesta = tipo.value;
+
+    if (!richiesta) {
+        alert(lang === "en"
+            ? "Please select the reason for your request."
+            : "Seleziona il motivo della tua richiesta.");
+        return;
+    }
+
+    if (!form.reportValidity()) {
+        return;
+    }
+
+    const nome = document.getElementById("nome").value.trim();
+    const telefono = document.getElementById("telefono").value.trim();
+
+    const titoli = {
+        general: lang === "en" ? "GENERAL INFORMATION" : "INFORMAZIONI GENERALI",
+        problem: lang === "en" ? "BOOKING ISSUE" : "PROBLEMA CON LA PRENOTAZIONE",
+        change: lang === "en" ? "BOOKING CHANGE REQUEST" : "RICHIESTA DI MODIFICA PRENOTAZIONE",
+        cancel: lang === "en" ? "BOOKING CANCELLATION REQUEST" : "RICHIESTA DI CANCELLAZIONE PRENOTAZIONE",
+        question: lang === "en" ? "QUESTION" : "DOMANDA",
+        other: lang === "en" ? "OTHER REQUEST" : "ALTRA RICHIESTA"
+    };
+
+    const linee = [
+        titoli[richiesta],
+        "",
+        (lang === "en" ? "Name: " : "Nome: ") + nome,
+        (lang === "en" ? "Phone: " : "Telefono: ") + telefono,
+        ""
+    ];
+
+    const valore = id => document.getElementById(id).value.trim();
+
+    const dataIt = data => data
+        ? data.split("-").reverse().join("/")
+        : "";
+
+    if (richiesta === "general") {
+
+        linee.push(
+            (lang === "en" ? "Topic: " : "Argomento: ") + valore("generalTopic"),
+            (lang === "en" ? "Message: " : "Messaggio: ") + valore("generalDetails")
+        );
+
+    }
+
+    if (richiesta === "problem") {
+
+        linee.push(
+            (lang === "en" ? "Booking reference: " : "Riferimento prenotazione: ") +
+                (valore("problemReference") || (lang === "en" ? "Not provided" : "Non indicato")),
+
+            (lang === "en" ? "Journey date: " : "Data del viaggio: ") +
+                (dataIt(valore("problemDate")) || (lang === "en" ? "Not provided" : "Non indicata")),
+
+            (lang === "en" ? "Issue type: " : "Tipo di problema: ") + valore("problemTopic"),
+
+            (lang === "en" ? "Description: " : "Descrizione: ") + valore("problemDetails")
+        );
+
+    }
+
+    if (richiesta === "change") {
+
+        const conferma = lang === "en"
+            ? "The customer confirms the booking change request."
+            : "Il cliente conferma la richiesta di modifica della prenotazione.";
+
+        linee.push(
+            (lang === "en" ? "Booking reference: " : "Riferimento prenotazione: ") +
+                (valore("changeReference") || (lang === "en" ? "Not provided" : "Non indicato")),
+
+            (lang === "en" ? "Current journey date: " : "Data attuale del viaggio: ") +
+                dataIt(valore("changeDate")),
+
+            (lang === "en" ? "Current time: " : "Orario attuale: ") + valore("changeTime"),
+
+            (lang === "en" ? "Detail to change: " : "Dato da modificare: ") + valore("changeType"),
+
+            (lang === "en" ? "Requested new details: " : "Nuovi dati richiesti: ") + valore("changeDetails"),
+
+            "",
+            conferma,
+            lang === "en"
+                ? "The change is subject to confirmation by Cooperativa Taxi Lecce."
+                : "La modifica è soggetta a conferma da parte della Cooperativa Taxi Lecce."
+        );
+
+    }
+
+    if (richiesta === "cancel") {
+
+        const conferma = lang === "en"
+            ? "The customer explicitly confirms the cancellation request."
+            : "Il cliente conferma esplicitamente la richiesta di cancellazione.";
+
+        linee.push(
+            (lang === "en" ? "Booking reference: " : "Riferimento prenotazione: ") +
+                (valore("cancelReference") || (lang === "en" ? "Not provided" : "Non indicato")),
+
+            (lang === "en" ? "Journey date: " : "Data del viaggio: ") +
+                dataIt(valore("cancelDate")),
+
+            (lang === "en" ? "Journey time: " : "Orario del viaggio: ") + valore("cancelTime"),
+
+            (lang === "en" ? "Reason: " : "Motivo: ") +
+                (valore("cancelReason") || (lang === "en" ? "Not specified" : "Non specificato")),
+
+            "",
+            conferma,
+            lang === "en"
+                ? "The cancellation request must be processed by Cooperativa Taxi Lecce."
+                : "La richiesta di cancellazione deve essere presa in carico dalla Cooperativa Taxi Lecce."
+        );
+
+    }
+
+    if (richiesta === "question") {
+
+        linee.push(
+            (lang === "en" ? "Question: " : "Domanda: ") + valore("questionDetails")
+        );
+
+    }
+
+    if (richiesta === "other") {
+
+        linee.push(
+            (lang === "en" ? "Request details: " : "Descrizione della richiesta: ") +
+                valore("otherDetails")
+        );
+
+    }
+
+    linee.push(
+        "",
+        lang === "en"
+            ? "Privacy Policy acknowledged by the customer."
+            : "Informativa sulla privacy accettata dal cliente."
+    );
+
+    // Conferma finale aggiuntiva per modifica e cancellazione.
+    if (richiesta === "change" || richiesta === "cancel") {
+
+        const messaggioConferma = richiesta === "change"
+            ? (
+                lang === "en"
+                    ? "Do you confirm that you want to send this booking change request?"
+                    : "Confermi di voler inviare questa richiesta di modifica della prenotazione?"
+            )
+            : (
+                lang === "en"
+                    ? "Do you confirm that you want to send this booking cancellation request?"
+                    : "Confermi di voler inviare questa richiesta di cancellazione della prenotazione?"
+            );
+
+        if (!window.confirm(messaggioConferma)) {
+            return;
+        }
+
+    }
+
+    const messaggio = linee.join("\n");
+
+    const numeroWhatsApp = "393286714428";
+
+    const url = "https://wa.me/" +
+        numeroWhatsApp +
+        "?text=" +
+        encodeURIComponent(messaggio);
+
+    window.open(url, "_blank");
+
+});
 
 
-document.getElementById("prenota").style.display="block";
+setLanguage(getLanguage());
 
-
-
-}
-
-
-
-catch(e){
-
-
-risultato.innerHTML="Errore. Controlla gli indirizzi inseriti.";
-
-}
-
-
-
-}
-
-
-
-
-
-function vaiPrenotazione(){
-
-
-window.location.href="prenotazione.html";
-
-
-}
-
-
+// Inizializza il modulo senza mostrare sezioni non selezionate.
+mostraSezione("");
 
 </script>
 
-
 </body>
-
 </html>
