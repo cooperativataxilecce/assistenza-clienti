@@ -31,7 +31,7 @@ body {
     width: 100%;
     padding: 35px;
     border-radius: 18px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
 }
 
 .logo {
@@ -43,39 +43,41 @@ body {
     object-fit: contain;
 }
 
+/* SELETTORE LINGUA A TENDINA */
+
 .lang-switch {
     display: flex;
     justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 18px;
+    margin-bottom: 22px;
 }
 
-.lang-switch button {
+.lang-switch select {
     width: auto;
-    margin: 0;
-    padding: 8px 12px;
-    background: #fff;
-    color: #444;
+    min-width: 155px;
+    max-width: 100%;
+    padding: 10px 38px 10px 13px;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 9px;
+    background-color: #fff;
+    color: #333;
     font-size: 14px;
-    font-weight: normal;
+    font-weight: 600;
     cursor: pointer;
-    transition: background .2s, color .2s, border-color .2s;
+    transition: border-color .2s, box-shadow .2s;
 }
 
-.lang-switch button.active {
-    background: #f39c12;
-    color: #fff;
+.lang-switch select:focus {
+    outline: none;
     border-color: #f39c12;
+    box-shadow: 0 0 0 3px rgba(243, 156, 18, .13);
 }
 
 h2 {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     color: #111;
-    line-height: 1.4;
+    font-size: 26px;
+    line-height: 1.35;
 }
 
 .intro {
@@ -83,7 +85,7 @@ h2 {
     font-size: 14px;
     color: #666;
     margin-bottom: 28px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 label {
@@ -114,7 +116,7 @@ select:focus,
 textarea:focus {
     outline: none;
     border-color: #f39c12;
-    box-shadow: 0 0 0 3px rgba(243,156,18,.13);
+    box-shadow: 0 0 0 3px rgba(243, 156, 18, .13);
 }
 
 label:has(+ input:focus),
@@ -125,31 +127,34 @@ label:has(+ select:focus) {
 
 textarea {
     resize: vertical;
-    min-height: 95px;
+    min-height: 105px;
 }
 
 select {
     cursor: pointer;
 }
 
+/* SEZIONI PRINCIPALI: PIÙ GRANDI DEI TITOLI DEI CAMPI */
+
 .section {
-    margin-top: 25px;
-    padding-top: 23px;
+    margin-top: 28px;
+    padding-top: 24px;
     border-top: 1px solid #eee;
 }
 
 .section-title {
-    font-size: 17px;
-    font-weight: bold;
+    font-size: 21px;
+    font-weight: 700;
     color: #111;
-    margin-bottom: 7px;
+    line-height: 1.4;
+    margin-bottom: 8px;
 }
 
 .section-description {
     color: #777;
     font-size: 13px;
-    line-height: 1.5;
-    margin-bottom: 16px;
+    line-height: 1.7;
+    margin-bottom: 17px;
 }
 
 .hidden {
@@ -237,9 +242,8 @@ select {
     transform: scale(.99);
 }
 
-.submit-btn:focus-visible,
-.lang-switch button:focus-visible {
-    outline: 3px solid rgba(243,156,18,.35);
+.submit-btn:focus-visible {
+    outline: 3px solid rgba(243, 156, 18, .35);
     outline-offset: 3px;
 }
 
@@ -248,7 +252,7 @@ select {
     text-align: center;
     color: #888;
     font-size: 12px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .required-note {
@@ -269,7 +273,11 @@ select {
     }
 
     h2 {
-        font-size: 22px;
+        font-size: 24px;
+    }
+
+    .section-title {
+        font-size: 20px;
     }
 
     input,
@@ -279,7 +287,7 @@ select {
     }
 
     .lang-switch {
-        justify-content: center;
+        justify-content: flex-end;
     }
 }
 </style>
@@ -288,12 +296,14 @@ select {
 <body>
 <div class="container">
 
-    <div class="lang-switch" role="group" aria-label="Seleziona lingua">
-        <button type="button" data-lang="it" aria-pressed="true" class="active">IT</button>
-        <button type="button" data-lang="en" aria-pressed="false">EN</button>
-        <button type="button" data-lang="fr" aria-pressed="false">FR</button>
-        <button type="button" data-lang="es" aria-pressed="false">ES</button>
-        <button type="button" data-lang="de" aria-pressed="false">DE</button>
+    <div class="lang-switch">
+        <select id="languageSelect" aria-label="Seleziona lingua">
+            <option value="it">Italiano</option>
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+            <option value="de">Deutsch</option>
+        </select>
     </div>
 
     <img src="logo.png" class="logo" alt="Cooperativa Taxi Lecce">
@@ -304,7 +314,7 @@ select {
         Siamo qui per aiutarti. Seleziona il motivo del contatto e compila i campi richiesti per inviarci la tua richiesta.
     </p>
 
-    <form id="supportForm">
+    <form id="supportForm" novalidate>
 
         <label for="tipo" data-i18n="requestType">Tipo di richiesta</label>
         <select id="tipo" name="tipo" required>
@@ -336,8 +346,8 @@ select {
                 name="nome"
                 autocomplete="name"
                 maxlength="100"
-                data-i18n-placeholder="namePlaceholder"
                 placeholder="Inserisci nome e cognome"
+                data-i18n-placeholder="namePlaceholder"
                 required
                 disabled
             >
@@ -349,8 +359,8 @@ select {
                 name="telefono"
                 autocomplete="tel"
                 maxlength="30"
-                data-i18n-placeholder="phonePlaceholder"
                 placeholder="Inserisci il tuo numero"
+                data-i18n-placeholder="phonePlaceholder"
                 required
                 disabled
             >
@@ -379,8 +389,8 @@ select {
                 id="generalDetails"
                 name="generalDetails"
                 maxlength="3000"
-                data-i18n-placeholder="messagePlaceholder"
                 placeholder="Come possiamo aiutarti?"
+                data-i18n-placeholder="messagePlaceholder"
                 required
                 disabled
             ></textarea>
@@ -402,8 +412,8 @@ select {
                 id="problemReference"
                 name="problemReference"
                 maxlength="100"
-                data-i18n-placeholder="referencePlaceholder"
                 placeholder="Es. codice di prenotazione"
+                data-i18n-placeholder="referencePlaceholder"
                 disabled
             >
 
@@ -427,8 +437,8 @@ select {
                 id="problemDetails"
                 name="problemDetails"
                 maxlength="3000"
-                data-i18n-placeholder="issuePlaceholder"
                 placeholder="Descrivi brevemente cosa è successo."
+                data-i18n-placeholder="issuePlaceholder"
                 required
                 disabled
             ></textarea>
@@ -450,8 +460,8 @@ select {
                 id="changeReference"
                 name="changeReference"
                 maxlength="100"
-                data-i18n-placeholder="referencePlaceholder"
                 placeholder="Es. codice di prenotazione"
+                data-i18n-placeholder="referencePlaceholder"
                 disabled
             >
 
@@ -477,8 +487,8 @@ select {
                 id="changeDetails"
                 name="changeDetails"
                 maxlength="2000"
-                data-i18n-placeholder="changePlaceholder"
                 placeholder="Inserisci i nuovi dati. Es. nuovo orario: 10:30"
+                data-i18n-placeholder="changePlaceholder"
                 required
                 disabled
             ></textarea>
@@ -507,8 +517,8 @@ select {
                 id="cancelReference"
                 name="cancelReference"
                 maxlength="100"
-                data-i18n-placeholder="referencePlaceholder"
                 placeholder="Es. codice di prenotazione"
+                data-i18n-placeholder="referencePlaceholder"
                 disabled
             >
 
@@ -548,8 +558,8 @@ select {
                 id="questionDetails"
                 name="questionDetails"
                 maxlength="3000"
-                data-i18n-placeholder="messagePlaceholder"
                 placeholder="Come possiamo aiutarti?"
+                data-i18n-placeholder="messagePlaceholder"
                 required
                 disabled
             ></textarea>
@@ -568,8 +578,8 @@ select {
                 id="otherDetails"
                 name="otherDetails"
                 maxlength="3000"
-                data-i18n-placeholder="otherPlaceholder"
                 placeholder="Scrivi qui la tua richiesta"
+                data-i18n-placeholder="otherPlaceholder"
                 required
                 disabled
             ></textarea>
@@ -1182,6 +1192,7 @@ const translations = {
 
 const form = document.getElementById("supportForm");
 const tipo = document.getElementById("tipo");
+const languageSelect = document.getElementById("languageSelect");
 const commonFields = document.getElementById("commonFields");
 const privacyContainer = document.getElementById("privacyContainer");
 const privacyCheckbox = document.getElementById("privacy");
@@ -1213,7 +1224,7 @@ function getLanguage() {
             return savedLanguage;
         }
     } catch (error) {
-        // Il modulo continua a funzionare anche se localStorage non è disponibile.
+        // Il modulo continua a funzionare anche senza localStorage.
     }
 
     return "it";
@@ -1223,6 +1234,7 @@ function translatePage(lang) {
     const dictionary = translations[lang] || translations.it;
 
     document.documentElement.lang = lang;
+    languageSelect.value = lang;
 
     document.querySelectorAll("[data-i18n]").forEach(element => {
         const key = element.dataset.i18n;
@@ -1240,16 +1252,9 @@ function translatePage(lang) {
         }
     });
 
-    document.querySelectorAll(".lang-switch button").forEach(button => {
-        const active = button.dataset.lang === lang;
-
-        button.classList.toggle("active", active);
-        button.setAttribute("aria-pressed", String(active));
-    });
-
     document.title = dictionary.pageTitle + " | Cooperativa Taxi Lecce";
 
-    // Crea il testo privacy senza inserire HTML ricevuto da input o URL.
+    // Il link privacy viene creato in modo sicuro senza inserire HTML dinamico.
     const privacyLabel = document.getElementById("privacyLabel");
     privacyLabel.replaceChildren();
 
@@ -1295,6 +1300,7 @@ function showSection(activeSection) {
     const hasRequest = Boolean(activeSection);
 
     commonFields.classList.toggle("hidden", !hasRequest);
+
     commonFields.querySelectorAll("input, select, textarea").forEach(field => {
         field.disabled = !hasRequest;
     });
@@ -1307,9 +1313,12 @@ function showSection(activeSection) {
 
     footerNote.classList.toggle("hidden", !hasRequest);
 
-    // Le conferme non vengono mantenute quando si cambia tipologia di richiesta.
+    // Le conferme vengono azzerate quando cambia il tipo di richiesta.
     document.getElementById("changeConfirm").checked = false;
     document.getElementById("cancelConfirm").checked = false;
+
+    // La privacy deve essere accettata nuovamente per la nuova richiesta.
+    privacyCheckbox.checked = false;
 }
 
 function selectedText(id) {
@@ -1330,7 +1339,6 @@ function fieldValue(id) {
 function formatDate(dateValue) {
     if (!dateValue) return "";
 
-    // Evita conversioni UTC che possono spostare la data al giorno precedente.
     const parts = dateValue.split("-");
 
     if (parts.length !== 3) return dateValue;
@@ -1339,9 +1347,11 @@ function formatDate(dateValue) {
 
     if (!year || !month || !day) return dateValue;
 
-    return linguaCorrente === "en"
-        ? month + "/" + day + "/" + year
-        : day + "/" + month + "/" + year;
+    if (linguaCorrente === "en") {
+        return month + "/" + day + "/" + year;
+    }
+
+    return day + "/" + month + "/" + year;
 }
 
 function addLine(lines, label, value, fallback = "") {
@@ -1355,8 +1365,6 @@ function addLine(lines, label, value, fallback = "") {
 function buildWhatsAppMessage() {
     const t = translations[linguaCorrente];
     const request = tipo.value;
-    const name = fieldValue("nome");
-    const phone = fieldValue("telefono");
 
     const titleByRequest = {
         general: t.generalMessage,
@@ -1370,8 +1378,8 @@ function buildWhatsAppMessage() {
     const lines = [
         titleByRequest[request],
         "",
-        t.msgName + ": " + name,
-        t.msgPhone + ": " + phone,
+        t.msgName + ": " + fieldValue("nome"),
+        t.msgPhone + ": " + fieldValue("telefono"),
         ""
     ];
 
@@ -1429,6 +1437,7 @@ function buildWhatsAppMessage() {
 
         addLine(lines, t.msgJourneyDate, formatDate(fieldValue("cancelDate")));
         addLine(lines, t.msgJourneyTime, fieldValue("cancelTime"));
+
         addLine(
             lines,
             t.msgReason,
@@ -1460,10 +1469,8 @@ tipo.addEventListener("change", () => {
     showSection(tipo.value);
 });
 
-document.querySelectorAll(".lang-switch button").forEach(button => {
-    button.addEventListener("click", () => {
-        setLanguage(button.dataset.lang);
-    });
+languageSelect.addEventListener("change", () => {
+    setLanguage(languageSelect.value);
 });
 
 form.addEventListener("submit", event => {
@@ -1478,6 +1485,7 @@ form.addEventListener("submit", event => {
         return;
     }
 
+    // Controlla solo i campi attivi: quelli delle sezioni nascoste sono disabilitati.
     if (!form.reportValidity()) {
         return;
     }
@@ -1488,7 +1496,6 @@ form.addEventListener("submit", event => {
         return;
     }
 
-    // Conferma aggiuntiva per richieste che possono modificare una prenotazione.
     if (request === "change" && !window.confirm(t.confirmChange)) {
         return;
     }
@@ -1498,18 +1505,18 @@ form.addEventListener("submit", event => {
     }
 
     const message = buildWhatsAppMessage();
-    const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+    const url = "https://wa.me/" + WHATSAPP_NUMBER +
+        "?text=" + encodeURIComponent(message);
 
-    // Apre WhatsApp solo dopo la validazione e le eventuali conferme.
+    // L'apertura avviene direttamente dopo l'interazione dell'utente.
     const whatsappWindow = window.open(url, "_blank");
 
-    // Alcuni browser bloccano le nuove finestre: in quel caso apre la pagina corrente.
     if (!whatsappWindow) {
         window.location.href = url;
     }
 });
 
-// Inizializzazione: applica la lingua condivisa con le altre pagine CTL.
+// Inizializzazione della lingua condivisa con le altre pagine CTL.
 setLanguage(getLanguage());
 
 // Nessuna sezione viene mostrata finché non viene scelto il tipo di richiesta.
